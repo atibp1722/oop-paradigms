@@ -12,3 +12,24 @@
 #singleton must be always in ready mode and loaded fast
 #thread safety to ensure that multi threaded access to enure access is always controlled
 
+#generic implementation
+#the most simplest version
+#constructor access needs to be controlled
+#instantiation through the static method
+
+class GenericSingleton:
+
+    #variable to hold single class instance
+    _instance=None
+
+    #override __init__ and constructor naccess needs to be controlled
+    def __init__(self):
+        #raise error to prevent costructor instantiaton
+        raise RuntimeError('Sorry constructor cannot be called')
+    
+    @classmethod
+    def class_instance(cls):
+        if not cls._instance:
+            #new instance of the class to be created
+            cls._instance=cls.__new__(cls)
+        return cls._instance
