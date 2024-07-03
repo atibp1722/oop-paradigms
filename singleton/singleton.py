@@ -24,12 +24,16 @@ class GenericSingleton:
 
     #override __init__ and constructor naccess needs to be controlled
     def __init__(self):
+        print('init called...')
         #raise error to prevent costructor instantiaton
         raise RuntimeError('Sorry constructor cannot be called')
     
     @classmethod
     def class_instance(cls):
+        print('method called...')
         if not cls._instance:
             #new instance of the class to be created
             cls._instance=cls.__new__(cls)
         return cls._instance
+    
+gs=GenericSingleton()
