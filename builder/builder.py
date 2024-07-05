@@ -12,7 +12,7 @@ class Food:
         self.origin=None
 
     def __str__(self):
-        return f'Name {self.name if self.name else 'NA'} price {self.price if self.price else 'NA'} origin {self.origin if self.origin else 'NA'}'
+        return f"Name {self.name if self.name else 'NA'} price {self.price if self.price else 'NA'} origin {self.origin if self.origin else 'NA'}"
     
 #builder class
 class FoodBuilder:
@@ -37,7 +37,13 @@ class FoodBuilder:
     def build(self):
         return self.food
     
-
 fb=FoodBuilder()
 food=fb.build()
+print(food)
+
+food=fb.set_name('pizza').set_price(399).build()
+print(food)
+
+fb1=FoodBuilder(food)
+food=fb.set_origin('Italy').build()
 print(food)
