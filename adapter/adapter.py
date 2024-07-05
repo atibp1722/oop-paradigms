@@ -26,7 +26,7 @@ class EuropeanSocket:
         pass
 
 #adaptee class
-class Adapter(EuropeanSocket):
+class Socket(EuropeanSocket):
 
     def volt(self):
         return 220
@@ -55,4 +55,48 @@ class AmericanSocket:
     def earth(self):
         pass
 
-#main adapter class
+#adapter class
+class Adapter(AmericanSocket):
+
+    _socket=None
+
+    def __init__(self,socket):
+        self.socket=socket
+
+    def volt(self):
+        return 110
+    
+    def neutral(self):
+        return self._socket.neutral()
+    
+    def live(self):
+        return self._socket.live()
+    
+#the client
+class WaffleMaker:
+
+    _power=None
+    
+    def __init__(self,power):
+        self.power=power
+
+    def make_waffle(self):
+        if self._power.volt()>110:
+            print('warning too much power!')
+        else:
+            if self._power.live()==1 and self._power.neutral()==-1:
+                print("it's waffle o'clock")
+            else:
+                print('no power to waffle')
+    
+def main():
+
+    skt=Socket()
+    adp=Adapter(skt)
+    waffle=WaffleMaker(adp)
+
+    waffle.make_waffle()
+
+    return 0
+
+main()
