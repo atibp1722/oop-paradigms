@@ -13,27 +13,41 @@ class User:
         self.name=name
 
     def update(self,title,author):
-        print(f'user {self.name}, has added work by {author.name}')
+        print(f'user {self.name} has added {title} written by {author.name}')
 
 class Writer:
 
     def __init__(self,name):
         self.name=name
+        self.__subscribers=[]
+        self.__titles=[]
 
     def add_title(self,title):
-        pass
+        self.__titles.append(title)
+        self.notify_subscribers(title)
 
     def get_title(self):
-        pass
+        return self.__titles
     
     def subscribe(self,subscriber):
-        pass
+        self.__subscribers.append(subscriber)
 
     def unsubscribe(self,subscriber):
-        pass
+        return self.__subscribers.remove(subscriber)
     
     def subscribers(self):
-        pass
+        return self.__subscribers
 
     def notify_subscribers(self,title):
-        pass
+        for i in self.__subscribers:
+            i.update(title,self)
+
+if __name__=='__main__':
+    wrt=Writer('George Orwell')
+    name1=User('admin')
+    name2=User('student')
+    wrt.subscribe(name1)
+    wrt.subscribe(name2)
+    wrt.add_title('1984')
+    wrt.unsubscribe(name2)
+    wrt.add_title('Animal Farm')
