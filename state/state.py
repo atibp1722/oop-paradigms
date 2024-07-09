@@ -45,55 +45,73 @@ class State(ABC):
 class WelcomeScreenState(State):
 
     def game_welcome_screen(self):
-        pass
+        print('This is the game load screen...')
 
     def game_playing(self):
-        pass
+        self.game.change_state(PlayingState(self.game))
 
     def game_pause(self):
-        pass
+        print('You cannot go from load screen to pause screen...')
 
     def game_end(self):
-        pass
+        print('You cannot go from load screen to end screen...')
 
 class PlayingState(State):
 
     def game_welcome_screen(self):
-        pass
+        print('You canot go from play screen to load screen...')
 
     def game_playing(self):
-        pass
+        print('Game is currently being played...')
 
     def game_pause(self):
-        pass
+        self.game.change_state(PauseState(self.game))
 
     def game_end(self):
-        pass
+        self.game.change_state(EndState(self.game))
 
 class PauseState(State):
 
     def game_welcome_screen(self):
-        pass
+        print('You canot go from pause screen to load screen...')
 
     def game_playing(self):
-        pass
+        self.game.change_state(PlayingState(self.game))
 
     def game_pause(self):
-        pass
+        print('Game is currently on pause...')
 
     def game_end(self):
-        pass
+        print('You canot go from pause screen to end screen...')
 
 class EndState(State):
 
     def game_welcome_screen(self):
-        pass
+        self.game.change_state(WelcomeScreenState(self.game))
 
     def game_playing(self):
-        pass
+        print('You canot go from end screen to play screen...')
 
     def game_pause(self):
-        pass
+        print('You canot go from end screen to pause screen...')
 
     def game_end(self):
-        pass
+        print('End screen currently in use...')
+
+if __name__=='__main__':
+    game=Game()
+    for i in range(25):
+        state=random.randrange(4)
+        if state==0:
+            print('Go to load screen...')
+            game.state.game_welcome_screen()
+        elif state==1:
+            print('Go to playing screen...')
+            game.state.game_playing()
+        elif state==2:
+            print('Go to pause screen...')
+            game.state.game_pause()
+        else:
+            print('Go to end screen...')
+            game.state.game_end()
+            
